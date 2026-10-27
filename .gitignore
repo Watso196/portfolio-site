@@ -1,0 +1,7 @@
+# Unfinished writing, kept on disk but not published
+drafts/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.bak

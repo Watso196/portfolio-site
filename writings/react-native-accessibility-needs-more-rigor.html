@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>React Native Accessibility Deserves More Rigor | Kalib Watson</title>
+<meta name="description" content="What is missing for accessibility in React Native, and why testing and documentation matter until it improves.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="React Native Accessibility Deserves More Rigor | Kalib Watson">
+<meta property="og:description" content="What is missing for accessibility in React Native, and why testing and documentation matter until it improves.">
+<!-- TEMPORARY: fonts load from Google Fonts until Alegreya and Atkinson Hyperlegible are self-hosted (see README). Remove these three lines when that is done. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,800;1,400&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<script src="../js/prefs.js"></script>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="site-name" href="../index.html" aria-label="Kalib Watson, home">Kalib Watson</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../index.html#writings">Writings</a></li>
+        <li><a href="../index.html#about">About me</a></li>
+        <li><a href="../index.html#connect">Connect</a></li>
+        <li>
+          <div class="settings">
+            <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
+            <div id="settings-panel" class="settings-panel" hidden>
+              <fieldset><legend>Theme</legend>
+                <label><input type="radio" name="theme" value="dark"> Dark</label>
+                <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
+              <fieldset><legend>Fonts</legend>
+                <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
+                <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
+              <fieldset><legend>Motion</legend>
+                <label><input type="radio" name="motion" value="on"> On</label>
+                <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="page">
+  <div class="wrap">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p>
+      <ul>
+        <li><a href="#what-we-dont-have-yet">What we don't have yet</a></li>
+        <li><a href="#foundational-accessibility-support">Foundational accessibility support</a>
+          <ul>
+            <li><a href="#accessibility-ordering">Accessibility ordering</a></li>
+            <li><a href="#links-in-inline-text">Links in inline text</a></li>
+          </ul>
+        </li>
+        <li><a href="#community-support-and-tooling">Community support and tooling</a>
+          <ul>
+            <li><a href="#reliable-recommendations-and-patterns">Reliable recommendations and patterns</a></li>
+          </ul>
+        </li>
+        <li><a href="#what-to-do-about-it">What to do about it</a></li>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </nav>
+    <article class="prose">
+      <h1 class="page-title">React Native Accessibility Deserves More Rigor</h1>
+      <svg class="pen draw reveal" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 9 C 90 3, 170 12, 262 7 S 440 3, 597 8"/></svg>
+      <p class="post-meta">Published <time datetime="2026-10">October 2026</time></p>
+
+<p>My team recently started auditing our new mobile app, and since has since spent a lot of time looking for good material on accessibility in React Native. Sadly, we've mostly come up short and created our own internal resources. For web, there's a huge body of guidance, testing tools, and people who have written down what they learned. For React Native, there's much less, and what exists sometimes disagrees with itself. I'm frustrated by it, so this post is both a call to action to fill that gap and the start of my attempt to help do so.</p>
+<p>I'm mostly writing here to my fellow accessibility professionals, but for React Native developers looking for the same answers you might find some value here! I've tried to be clear about what I've verified, what comes from our own testing, and what I couldn't find out because the picture here is fuzzy, and I don't want to make it sound complete when I'm still learning, too.</p>
+
+<h2 id="what-we-dont-have-yet">What we don't have yet</h2>
+<p>I will admit that there are many things that React Native is doing well in terms of accessibility, and I believe that the React Native team is working on bridging gaps. That said, I'm focusing on the gaps that still exist here. If this reads as critical, it's because I've spotted something that has affected my team's ability to do good work on our React Native app.</p>
+<p>I'll also recognize up front that a lot of what I'm going to gripe about is available in native app languages and environments. That's great! I am truly happy about that. That said, I don't have the authority to tell a team to simply switch the app over to Kotlin or Swift, and that is quite the ask. Additionally, React Native is a widespread and popular technology for creating mobile apps. It should support accessibility and the creators and consumers of React Native should care that these gaps exist (I do!).</p>
+
+<h2 id="foundational-accessibility-support">Foundational accessibility support</h2>
+<p>In the time I've been working with React Native, which admittedly is only the past 3-4 years, it has taken a long time to see accessibility improvement in the platform. To show you what I mean, I have a couple examples of where React Native falls short in foundational ways.</p>
+
+<h3 id="accessibility-ordering">Accessibility ordering</h3>
+<p>In HTML, you can change the reading and focus order by changing the code. CSS can still affect the accuracy of that ordering, but you have a dependable mechanism to affect that experience. Native iOS and Android also give developers a way to set order through their props. React Native doesn't expose that tooling, though the base APIs they tie their work to (iOS and Android) support it.</p>
+<p>For mobile apps, the order comes from the platform's accessibility API, which interprets the UI layout. On Android, Google's docs say TalkBack follows the view hierarchy by default for classic views, while Jetpack Compose uses position, left to right and top to bottom. (The view hierarchy, though closer, isn't the same thing as code order, since React Native turns components into native views along the way.) We haven't confirmed exactly how React Native's Android output is ordered. What we can say from testing is that it doesn't simply follow code order. The same is very true for iOS's order output.</p>
+<p>In practice, this means moving code around often does very little, and moving things on screen might help but often means we're adapting the layout of our app with sometimes no result. Many times, we find we have a reasonable layout, such as a grid of card content, and it just isn't presented properly. When this happens, we don't have a good way to resolve the issue without resorting to hacky <code>accessible</code> containerization of elements.</p>
+<p>React Native's answer is <code>experimental_accessibilityOrder</code>, and it's a good potential update. It takes an array of <code>nativeID</code>s that sets the order assistive technology focuses a view's children. However, it's still experimental after being released in 2025 with v0.80.0. The list is also exhaustive, so any accessible child you leave out becomes unreachable. It solves a clear problem, but the tool isn't ready. Until it is, reading order is something we have no tooling to effect, meaning there are poor experiences that we just cannot repair.</p>
+
+<h3 id="links-in-inline-text">Links in inline text</h3>
+<p>Another underserved area is links within inline text. People are paying attention, but the conversation is limited and support is slow. In React Native, a link nested inside inline text often doesn't behave like a link for assistive technology. A <a href="https://github.com/facebook/react-native/issues/32004">GitHub issue</a> opened in August 2021 describes the problem and is still open. Our testing shows that Bluetooth keyboards don't have a clear way to reach these links, and users who are unfamiliar with all of their screen readers' features struggle to use them.</p>
+<p>Reports vary by platform, build, and version. On Android, TalkBack can list a paragraph's links in its actions menu instead of making them inline focus stops. On iOS, people report that VoiceOver reads the link as static text, or reaches it without being able to activate it. One commenter couldn't reach the link text with a keyboard at all, which supports our findings.</p>
+<p>Though there is a workaround, this very much feels like a blocker. Not every user knows that Android has a link list, and the tools people use vary. A link inside of inline text is basically the default display case for a link. The workarounds are poor, too: the issue's author notes that even laying pressable views over the text doesn't work, because layout events don't fire for nested Text.</p>
+<p>The reason I bring this issue up is that it has sat open for over 5 years! That is a very long time to know that this issue exists and not push a fix for it, when it affects most of the instances of links that React Native consumers will create. Similarly, the accessibilityOrder conversation had been going on for several years before the <code>experimental_accessibilityOrder</code> prop was released for trial. I can certainly appreciate a library that wants to be cautious and release meaningful and valuable features, but after waiting long periods for several minor, foundational updates, it can start to feel like accessibility is not being properly prioritized. I fully understand there are competing priorities for those folks and the business, but we want to use your library and can't do so without legal and UX risk!</p>
+
+<h2 id="community-support-and-tooling">Community support and tooling</h2>
+<p>From everything I've explored, we don't have reliable linting for React Native yet. <code>eslint-plugin-react-native-a11y</code> exists, but it isn't well maintained (at the time of writing it's now 2 years since the last release even though PRs continue to be merged), and so my team is finding time to build a package of our own. Until then, we decide whether something works well enough by testing it with a screen reader, with larger text sizes, and with a Bluetooth keyboard on iOS and Android. Sure, there are automated tools like Google Play Console that report on issues, but those are not configurable to our best practices and standards like a linting library.</p>
+<p>This manual testing approach means developers get slower feedback, and we spend more time identifying issues. I do understand that creating a package means it needs to be maintained, which is a time cost, and this maintainer may just not be supporting this project as a priority anymore. That said, the community would benefit greatly from a well maintained package with a dedicated maintainer.</p>
+
+<h3 id="reliable-recommendations-and-patterns">Reliable recommendations and patterns</h3>
+<p>The React Native docs and the linting plugin I mentioned both push you toward adding <code>accessibilityHint</code> to interactive controls. In our testing, the <code>has-accessibility-hint</code> rule was on by default, and required adding <code>accessibilityHint</code> to any interactive control. I certainly agree that the <code>accessibilityHint</code> prop is useful and should be considered, but adding "Go back to the previous page" to a button named "Back" isn't really helpful context for users. My team found that requiring a prop like this tends to lead to that type of repetitive outcome more often than not.</p>
+<pre tabindex="0"><code>// Redundant: the role and label already say what pressing this does
+&lt;Pressable
+  accessibilityRole="button"
+  accessibilityLabel="Add to cart"
+  accessibilityHint="Adds this item to your cart"
+  onPress={addToCart}
+&gt;</code></pre>
+<p>When a control has a role and a clear label, the hint tends to repeat them. A screen reader user would hear the above example as "Add to cart, button, adds this item to your cart."</p>
+<pre tabindex="0"><code>// Useful: the label and role don't say what happens next
+&lt;Pressable
+  accessibilityRole="button"
+  accessibilityLabel="Order 1042, shipped Oct 14"
+  accessibilityHint="Opens order details and tracking"
+  onPress={openOrder}
+&gt;</code></pre>
+<p>Our rule of thumb is that a hint should carry contextual information a person needs when they reach a control, similar to what <code>aria-describedby</code> does on the web. It shouldn't restate what the control already says. There is a bit more nuance to doing this in React Native, because most controls in mobile apps are buttons, but this could be an entire post of its own.</p>
+<p>It's worth pointing out that docs say iOS users can turn hints off in VoiceOver settings, but hints cannot be turned off on Android. This means two things: First, we cannot rely on <code>accessibilityHint</code> as a way to convey important information. We should be relating helpful information with it, but we should not rely on it to convey to the user anything they absolutely need to know. Second, if we write repetitive <code>accessibilityHint</code> content with the intent of being super clear for iOS users, we are subjecting Android users to that context every time without exception, which isn't a good experience.</p>
+<p>Apple's guidance says hints "aren't always necessary," which supports our view, but it also suggests moving text from a long label into a hint. I didn't find a source arguing for a hint on every control, which could mean the linting rule is just being too aggressive about this particular pattern. That said, I do think the React Native docs are unclear about how to use this prop, and I have seen overuse of <code>accessibilityHint</code> enough times now that I think it's a problem worth addressing.</p>
+<p>There are other gaps in this area outside of my gripes with <code>accessibilityHint</code>. Many of the packages that one can consume in React Native have accessibility issues, such as the popular <code>react-native-reanimated</code>, <code>react-navigation</code>, and <code>react-native-bottom-sheet</code> which all have open accessibility issues listed against their projects (and my teams have identified issues with in our testing). I believe this points to a lack of clear accessible patterns for React Native consumers, which is why my team started the <a href="https://github.com/Watso196/a11yPlayground">a11yPlayground</a> project. It's our own library of React Native patterns that we've tested and feel work accessibly. We hope that it will help our developers create accessible patterns, and also that it will maybe help you, if you're looking for something like this!</p>
+
+<h2 id="what-to-do-about-it">What to do about it</h2>
+<p>Again, this is a call to action for me and for you! We need to step up to support React Native consumers in creating more accessible outcomes. If you're doing testing, research, or development in React Native, please share with the community what you're finding or working on.</p>
+<p>For those who are trying to test and support accessibility in React Native applications, read the React Native accessibility docs before you trust a blog post, including this one! Be wary of the recommendations in resources across the web, because many disagree with each other. Test everything on real devices with a screen reader, large text, and a keyboard, and write down what you learn (hopefully to share it with us!). Until the ecosystem catches up, that rigor and documentation is what we have. I plan to share more of what my team and I learn here as we uncover it.</p>
+
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://reactnative.dev/docs/accessibility">Accessibility, React Native docs</a></li>
+<li><a href="https://reactnative.dev/docs/accessibilityinfo">AccessibilityInfo, React Native docs</a></li>
+<li><a href="https://developer.android.com/develop/ui/compose/accessibility/traversal">Traversal order in Compose, Android Developers</a></li>
+<li><a href="https://developer.apple.com/documentation/uikit/supporting-voiceover-in-your-app.md">Supporting VoiceOver in your app, Apple Developer Documentation</a></li>
+<li><a href="https://cdn.jsdelivr.net/npm/eslint-plugin-react-native-a11y@3.5.1/README.md">eslint-plugin-react-native-a11y README</a></li>
+<li><a href="https://github.com/facebook/react-native/issues/32004">Accessibility for nested text components, React Native issue 32004</a></li>
+</ul>
+
+      <p class="back"><a href="../index.html#writings">Back to Writings</a></p>
+    </article>
+  </div>
+</main>
+</main>
+</main>
+<script src="../js/site.js"></script>
+</body>
+</html>

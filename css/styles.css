@@ -1,0 +1,217 @@
+:root{
+  --bg:#1B211F; --panel:#252E2B; --ink:#ECE6D6; --soft:#B4BCB0; --rule:#3B4741;
+  --amber:#F2B84B; --on-amber:#1B211F; --hl:rgba(242,184,75,.38); --focus:#F2B84B; --halo:#1B211F;
+  --font-display:"Alegreya","Lora",Georgia,serif;
+  --font-body:"Alegreya","Lora",Georgia,serif;
+  --font-ui:"Atkinson Hyperlegible",Carlito,system-ui,sans-serif;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#EEF1EC; --panel:#F9FBF8; --ink:#1B211F; --soft:#47534C; --rule:#C2CBC4; --hl:rgba(242,184,75,.6); --focus:#1B211F; --halo:transparent;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#EEF1EC; --panel:#F9FBF8; --ink:#1B211F; --soft:#47534C; --rule:#C2CBC4; --hl:rgba(242,184,75,.6); --focus:#1B211F; --halo:transparent;
+}
+:root[data-theme="light"]{color-scheme:light}
+:root[data-theme="dark"]{color-scheme:dark}
+:root[data-fonts="plain"]{
+  --font-display:Georgia,"Times New Roman",serif;
+  --font-body:Georgia,"Times New Roman",serif;
+  --font-ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+/* Plain fonts (Georgia) are wider than the expressive ones (Alegreya), and bold Georgia much wider. These factors shrink plain text to compensate;
+   the script below re-measures them from the fonts the browser actually has. --fb: body text, --fd: bold display headings. */
+:root{--plain-fb:.94;--plain-fd:.884}
+:root[data-fonts="plain"]{--fb:var(--plain-fb);--fd:var(--plain-fd)}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:calc(1.25rem*var(--fb,1));line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration-thickness:.07em;text-underline-offset:.2em}
+a:hover{text-decoration-thickness:.16em}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:2px}
+.settings{display:none}
+.js .settings{display:block}
+.wrap{width:min(100% - 2rem,70rem);margin-inline:auto}
+.skip-link{position:absolute;left:1rem;top:-4rem;padding:.75rem 1rem;background:var(--ink);color:var(--bg);font-family:var(--font-ui);z-index:20}
+.skip-link:focus{top:1rem}
+.nowrap{white-space:nowrap}
+
+/* ---------- header ---------- */
+.site-header{border-bottom:1px solid var(--rule);font-family:var(--font-ui)}
+.site-header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.25rem 2rem;padding-block:.75rem}
+.site-name{font-family:var(--font-display);font-weight:800;font-size:calc(1.6rem*var(--fd,1));text-decoration:none;padding-block:.25rem}
+.site-nav ul{display:flex;flex-wrap:wrap;align-items:center;gap:0 1.25rem;margin:0;padding:0;list-style:none}
+.site-nav a{display:inline-block;padding:.5rem .25rem;font-size:1rem;text-decoration:none;
+  background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 100%/0 100%;transition:background-size .25s ease}
+.site-nav a:hover{background-size:100% 100%}
+
+/* ---------- display settings ---------- */
+.settings{position:relative}
+.settings-toggle{font:inherit;font-size:1rem;color:inherit;background:transparent;border:1px solid var(--rule);border-radius:3px;padding:.4rem .8rem;cursor:pointer}
+.settings-toggle:hover,.settings-toggle[aria-expanded="true"]{border-color:var(--ink)}
+.settings-panel{position:absolute;right:0;top:calc(100% + .5rem);z-index:15;width:17rem;padding:1rem 1.25rem;background:var(--panel);border:1px solid var(--rule);font-size:1rem;line-height:1.5;box-shadow:0 .5rem 1.5rem rgba(0,0,0,.25)}
+.settings-panel[hidden]{display:none}
+.settings-panel fieldset{border:0;margin:0 0 .75rem;padding:0}
+.settings-panel legend{font-weight:700;padding:0;margin-bottom:.25rem}
+.settings-panel label{display:inline-block;margin-right:1rem;padding-block:.2rem}
+.settings-panel input{accent-color:var(--amber)}
+
+/* ---------- motion primitives (hidden states only apply with JS and motion on) ---------- */
+svg.draw path{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len);stroke-dashoffset:0;
+  transition:stroke-dashoffset var(--t,1.3s) cubic-bezier(.6,.1,.3,1) var(--d,0s)}
+.js:not([data-motion="off"]):not([data-seen]) svg.draw:not(.in) path{stroke-dashoffset:var(--len)}
+
+/* ---------- hero: the big greeting and the photo ---------- */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(12rem,20rem);gap:2rem 4.5rem;align-items:start;padding-block:clamp(2rem,6vw,4.5rem) clamp(1.5rem,4vw,3rem)}
+.greeting{margin:0;font-weight:400}
+.big{display:block;font-family:var(--font-display);font-weight:800;font-size:calc(clamp(3.4rem,10.5vw,8.25rem)*var(--fd,1));line-height:.95;letter-spacing:-.02em;text-wrap:balance}
+.name{position:relative;display:inline-block;padding-inline:.04em;-webkit-text-stroke:var(--halo-w,4px) var(--halo);paint-order:stroke fill}
+.loop{position:absolute;left:-7%;top:-12%;width:114%;height:126%;overflow:visible;pointer-events:none;z-index:-1}
+.loop path{stroke:var(--amber);stroke-width:5;--len:900;--t:1.5s;--d:.3s}
+.role{display:block;margin-top:1.4rem;max-width:26ch;font-family:var(--font-display);font-weight:500;font-size:calc(clamp(1.45rem,3.2vw,2.15rem)*var(--fb,1));line-height:1.22}
+
+.portrait{margin:.75rem 0 0;max-width:20rem;justify-self:end;width:100%}
+.portrait-frame{position:relative;isolation:isolate;aspect-ratio:4/5;border:2px solid var(--ink)}
+.portrait-frame::before{content:"";position:absolute;inset:1rem -1rem -1rem 1rem;background:var(--amber);z-index:-1;transition:transform .9s cubic-bezier(.6,.1,.3,1) 2.5s,opacity .01s linear 2.5s}
+.portrait-frame img,.portrait-ph{display:block;width:100%;height:100%;object-fit:cover;clip-path:inset(0);transition:clip-path 1.1s cubic-bezier(.7,0,.2,1) 1.5s}
+.portrait-ph{display:grid;place-items:center;padding:1rem;text-align:center;font-family:var(--font-ui);font-size:1rem;color:var(--soft);
+  background:repeating-linear-gradient(135deg,transparent 0 9px,var(--rule) 9px 10px),var(--panel)}
+.js:not([data-motion="off"]):not([data-seen]) .portrait:not(.in) .portrait-frame::before{transform:translate(-1rem,-1rem);opacity:0}
+.js:not([data-motion="off"]):not([data-seen]) .portrait:not(.in) img,.js:not([data-motion="off"]):not([data-seen]) .portrait:not(.in) .portrait-ph{clip-path:inset(0 100% 0 0)}
+
+/* ---------- intro + sections ---------- */
+.intro>div,.section .wrap>div,.page-head>*{max-width:41rem}
+.intro{padding-block:clamp(1rem,3vw,2rem) clamp(2.5rem,6vw,4rem)}
+.question{margin:0;font-family:var(--font-display);font-weight:800;font-size:calc(clamp(2rem,4.4vw,3.1rem)*var(--fd,1));line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+.pen{display:block;width:min(100%,30rem);height:.9rem;margin:.35rem 0 1.75rem;overflow:visible}
+.pen path{stroke:var(--amber);stroke-width:4;--len:800;--t:1.4s}
+.intro p{margin:0 0 1em}
+.hl{background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 0/100% 100%;padding:.02em .15em;box-decoration-break:clone;-webkit-box-decoration-break:clone;transition:background-size 1.1s cubic-bezier(.6,.1,.3,1) .35s}
+.js:not([data-motion="off"]):not([data-seen]) .hl:not(.in){background-size:0 100%}
+
+/* ---------- sections ---------- */
+.section{border-top:1px solid var(--rule);padding-block:3rem}
+.section h2{margin:0;font-family:var(--font-display);font-weight:800;font-size:calc(2.2rem*var(--fd,1));line-height:1.1}
+.h-pen{display:block;width:4.5rem;height:.55rem;margin:.2rem 0 .9rem;overflow:visible}
+.h-pen path{stroke:var(--amber);stroke-width:3;--len:200;--t:.9s}
+.section h3{margin:1.25rem 0 .25rem;font-family:var(--font-display);font-weight:500;font-style:italic;font-size:calc(1.3rem*var(--fb,1))}
+.section p{margin:0 0 1em}
+.note-list{margin:0;padding:0 0 0 1.5rem;list-style:disc;font-size:calc(1.3rem*var(--fb,1))}
+.note-list li{margin:0 0 .9rem;padding-left:.25rem}
+.note-list li::marker{color:var(--ink);font-size:1.1em}
+.teaser{display:block;margin-top:.1rem;color:var(--soft);font-family:var(--font-ui);font-size:1rem;line-height:1.45}
+.more{margin:1.25rem 0 0;font-family:var(--font-ui);font-size:1rem}
+.more a{display:inline-block;padding-block:.35rem}
+.links{margin:0;padding:0 0 0 1.5rem;list-style:disc}
+.links li::marker{color:currentColor}
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.page-head{padding-block:clamp(2rem,6vw,4rem) 1.5rem}
+.page-title{margin:0;font-family:var(--font-display);font-weight:800;font-size:calc(clamp(2.8rem,8vw,5.5rem)*var(--fd,1));line-height:1;letter-spacing:-.02em}
+.site-nav a[aria-current="page"]{background-size:100% 100%}
+.lede{margin:0 0 1em}
+.links a{display:inline-block;padding-block:.25rem}
+/* Disclosure control: styled as a button (border, fill, icon, no underline) so it is not mistaken for text or a link. */
+.disclosure{margin:1.5rem 0 0}
+.disclosure>summary{display:inline-flex;align-items:center;gap:.75rem;min-height:2.75rem;padding:.55rem 1.1rem;font-family:var(--font-ui);font-size:1.05rem;font-weight:700;line-height:1.3;color:var(--ink);background:var(--panel);border:2px solid var(--ink);border-radius:6px;cursor:pointer;list-style:none;user-select:none;transition:background-color .2s ease,color .2s ease}
+.disclosure>summary::-webkit-details-marker{display:none}
+.disclosure>summary::after{content:"+"/"";flex:none;width:1rem;text-align:center;font-size:1.4em;font-weight:400;line-height:1}
+.disclosure[open]>summary::after{content:"\2212"/""}
+.disclosure>summary:hover{background:var(--amber);color:var(--on-amber);border-color:var(--amber)}
+.disclosure-body{margin-top:1.25rem;padding-left:1rem;border-left:3px solid var(--amber)}
+.disclosure-body p{margin:0}
+.disclosure-body .note-list{padding-left:1.25rem}
+.disclosure-body .note-list li:last-child{margin-bottom:0}
+.draft-title{display:block}
+.band .disclosure>summary{color:var(--on-amber);background:rgba(27,33,31,.1);border-color:var(--on-amber)}
+.band .disclosure>summary:hover{background:var(--on-amber);color:var(--amber);border-color:var(--on-amber)}
+.band .disclosure-body{border-left-color:var(--on-amber)}
+.btn{display:none;align-items:center;gap:.75rem;min-height:2.75rem;padding:.55rem 1.1rem;font-family:var(--font-ui);font-size:1.05rem;font-weight:700;line-height:1.3;color:var(--ink);background:var(--panel);border:2px solid var(--ink);border-radius:6px;cursor:pointer;transition:background-color .2s ease,color .2s ease}
+.js .btn{display:inline-flex}
+.btn:hover{background:var(--amber);color:var(--on-amber);border-color:var(--amber)}
+.js .no-js-note{display:none}
+.no-js-note{font-family:var(--font-ui);font-size:1rem;color:var(--soft)}
+.email-item{list-style:none;margin-top:.75rem}
+.email-item::marker{content:""}
+.band{background:var(--amber);color:var(--on-amber);border-top:0}
+.band .h-pen path{stroke:var(--on-amber)}
+.band :focus-visible{outline-color:var(--on-amber)}
+
+.site-footer{border-top:1px solid var(--rule);padding-block:2rem 3rem;color:var(--soft);font-family:var(--font-ui);font-size:.95rem}
+.site-footer p{margin:0}
+
+/* ---------- small screens ---------- */
+@media (max-width:52rem){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .portrait{justify-self:start;max-width:15rem;margin-top:1rem}
+  .site-header{position:relative}
+  .settings{position:static}
+  .settings-panel{left:1rem;right:1rem;width:auto;top:calc(100% - .25rem)}
+}
+@media (forced-colors:active){
+  :focus-visible{outline:3px solid Highlight;outline-offset:3px}
+  .name{-webkit-text-stroke:0}
+  .settings-toggle,.settings-panel{border-color:CanvasText}
+  .hl{text-decoration:underline;text-decoration-thickness:.12em}
+  .portrait-frame{border-color:CanvasText}
+}
+:root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{animation:none!important;transition:none!important}
+
+/* ---------- writing pages (long-form) ---------- */
+.page{padding-block:clamp(2rem,6vw,4rem) 3rem}
+.prose{max-width:46rem}
+.prose .page-title{font-size:calc(clamp(2.4rem,6vw,4rem)*var(--fd,1))}
+.prose h2{margin:2.5rem 0 .75rem;font-family:var(--font-display);font-weight:800;font-size:calc(1.9rem*var(--fd,1));line-height:1.15}
+.prose p{margin:0 0 1em}
+.prose code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:.88em;padding:.05em .3em;background:var(--panel);border:1px solid var(--rule);border-radius:3px}
+.prose .back{margin-top:2.5rem;font-family:var(--font-ui);font-size:1rem}
+.prose .back a{display:inline-block;padding-block:.35rem}
+
+/* ---------- "On this page" list ---------- */
+.prose h2{scroll-margin-top:1.5rem}
+.toc{max-width:46rem;margin:0 0 2rem;padding:1rem 1.25rem;border:1px solid var(--rule);background:var(--panel);font-family:var(--font-ui);font-size:1rem;line-height:1.4}
+.toc-title{margin:0 0 .4rem;font-weight:700}
+.toc ul{margin:0;padding:0 0 0 1.25rem;list-style:disc}
+.toc li::marker{color:var(--ink)}
+.toc a{display:inline-block;padding-block:.3rem}
+.toc a[aria-current="location"]{font-weight:700;text-decoration-thickness:.16em}
+@media (min-width:66rem){
+  .page>.wrap{display:grid;grid-template-columns:minmax(0,46rem) 15rem;gap:0 4rem;justify-content:start}
+  .page .prose{grid-column:1;grid-row:1}
+  .toc{grid-column:2;grid-row:1;position:sticky;top:1.5rem;align-self:start;margin:.5rem 0 0;padding:.25rem 0 .25rem 1rem;border:0;border-left:3px solid var(--amber);background:none}
+}
+
+/* ---------- draft marker (remove the notice and this rule when a writing is published) ---------- */
+.draft-note{margin:0 0 1.5rem;padding:.75rem 1rem;border:2px dashed var(--ink);font-family:var(--font-ui);font-size:1rem;line-height:1.45}
+.prose mark{background:var(--hl);color:inherit;padding:.02em .2em}
+@media (forced-colors:active){.prose mark{background:Mark;color:MarkText}}
+
+/* ---------- code and lists in writings ---------- */
+.prose pre{margin:0 0 1.25em;padding:1rem;overflow-x:auto;background:var(--panel);border:1px solid var(--rule);font-size:.9rem;line-height:1.5}
+.prose pre code{padding:0;background:none;border:0;font-size:inherit}
+.prose ul{margin:0 0 1em;padding-left:1.5rem;list-style:disc}
+.prose li{margin-bottom:.4rem}
+.prose li::marker{color:var(--ink)}
+
+.prose p code,.prose li code{overflow-wrap:anywhere}
+
+/* ---------- live button demo, nested "On this page" entries, h3 in writings ---------- */
+.demo{display:none;margin:1.5rem 0;padding:1.25rem;border:1px solid var(--rule);background:var(--panel);font-family:var(--font-ui);font-size:1.05rem;line-height:1.5}
+.js .demo{display:block}
+.demo p{margin:0}
+.demo-stage{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:.9rem}
+.demo-status{min-height:1.5em;font-size:1rem}
+.demo-status[data-kind="ok"]::before{content:"\2713\00a0"/""}
+.demo-status[data-kind="error"]{padding-left:.6rem;border-left:3px solid var(--ink);font-weight:700}
+.demo-status[data-kind="error"]::before{content:"\26A0\00a0"/""}
+.demo-btn[aria-disabled="true"]{cursor:progress;border-style:dashed}
+.demo p.demo-option{margin-top:.9rem}
+.demo-option input{accent-color:var(--amber)}
+.toc ul ul{margin:.1rem 0 .3rem;padding-left:1rem}
+.toc ul ul a{font-size:.95rem}
+.prose h3{margin:2rem 0 .5rem;font-family:var(--font-display);font-weight:800;font-size:calc(1.4rem*var(--fd,1));line-height:1.2}
+
+/* "On this page": block links keep the bullet on the first line when an entry wraps */
+.toc a{display:block}
+
+.post-meta{margin:-.75rem 0 1.5rem;font-family:var(--font-ui);font-size:1rem;color:var(--soft)}

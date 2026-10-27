@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>The Work Behind an Accessibility Audit | Kalib Watson</title>
+<meta name="description" content="Why an accessibility audit is the beginning of the work, not the work: scoping, buy-in, follow-up, metrics, and long-term support.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Work Behind an Accessibility Audit | Kalib Watson">
+<meta property="og:description" content="Why an accessibility audit is the beginning of the work, not the work: scoping, buy-in, follow-up, metrics, and long-term support.">
+<!-- TEMPORARY: fonts load from Google Fonts until Alegreya and Atkinson Hyperlegible are self-hosted (see README). Remove these three lines when that is done. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,800;1,400&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<script src="../js/prefs.js"></script>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="site-name" href="../index.html" aria-label="Kalib Watson, home">Kalib Watson</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../index.html#writings">Writings</a></li>
+        <li><a href="../index.html#about">About me</a></li>
+        <li><a href="../index.html#connect">Connect</a></li>
+        <li>
+          <div class="settings">
+            <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
+            <div id="settings-panel" class="settings-panel" hidden>
+              <fieldset><legend>Theme</legend>
+                <label><input type="radio" name="theme" value="dark"> Dark</label>
+                <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
+              <fieldset><legend>Fonts</legend>
+                <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
+                <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
+              <fieldset><legend>Motion</legend>
+                <label><input type="radio" name="motion" value="on"> On</label>
+                <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="page">
+  <div class="wrap">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p>
+      <ul>
+        <li><a href="#before-the-audit-scope">Before the audit: scope</a></li>
+        <li><a href="#before-the-audit-buy-in">Before the audit: buy-in</a></li>
+        <li><a href="#before-the-audit-the-meeting">Before the audit: the meeting</a></li>
+        <li><a href="#the-audit">The audit</a></li>
+        <li><a href="#after-the-audit-follow-up">After the audit: follow-up</a></li>
+        <li><a href="#after-the-audit-metrics">After the audit: metrics</a></li>
+        <li><a href="#after-the-audit-remediation-and-long-term-support">After the audit: remediation and long-term support</a></li>
+        <li><a href="#how-to-start">How to start</a></li>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </nav>
+    <article class="prose">
+      <h1 class="page-title">The Work Behind an Accessibility Audit</h1>
+      <svg class="pen draw reveal" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 9 C 90 3, 170 12, 262 7 S 440 3, 597 8"/></svg>
+      <p class="post-meta">Published <time datetime="2026-10">October 2026</time></p>
+
+<p>If you're about to run your first accessibility audit, or you've run a few and keep ending up in the same place, this is for you. Keep in mind that I work on accessibility internally at my org, so that's how I'm approaching the topic! That said, I've worked with many clients in the past, and these concepts carry over.</p>
+<p>In my experience, the audit is surrounded by other work that makes it valuable, so just running an audit probably won't get you the results you're after. A lot happens before it and a lot more happens after. If you skip the set up or follow up, your audits will turn up the same issues again and again, and you'll be chasing the garbage truck (fixing the same problems over and over while new ones arrive).</p>
+
+<h2 id="before-the-audit-scope">Before the audit: scope</h2>
+<p>Start by deciding what you're testing and what you're not for each audit. That's easy for a website with distinct pages and little dynamic content. However, when you ask for an audit of a product page with 10 modals, 5 carousels, expandable customer reviews, videos, and content that appears based on user log in type, your audit scope balloons and the chance of missing issues increases. This can also water down or inflate your metrics based on how well you break down your content into audits. Most of all it can frustrate the accessibility professionals you're working with! My team did me the favor of complaining about our PDP (product details page) audit, and we now have a much more modular approach that doesn't have them auditing the same page for two weeks. They're happier, and our metrics are more meaningful and consistent. Similarly, our new mobile app has fewer clear "pages" and a lot of pop-up content and nested views, so we had to decide which views belonged in each audit. We also had to decide where to split content so each piece was a meaningful metric point and the whole scope was still reasonable to audit.</p>
+
+<h2 id="before-the-audit-buy-in">Before the audit: buy-in</h2>
+<p>Your audit will tell people what to fix (and sometimes how if it's very thorough), but only if someone has agreed to fix the findings. Before we started a regular audit cadence on our website, I contacted the project owners for each site section. I told them what we planned to do, how often we'd do it, and what reporting and remediation they should expect.</p>
+<p>When the first reports arrived and I asked those owners to help set remediation timelines, they weren't surprised, and the conversations were much easier. Partnering with a product owner or content manager early also teaches you why a page exists and what matters on it, which helps when you judge what's important. This can be helpful in setting scope for audits if you're not familiar with the product.</p>
+
+<h2 id="before-the-audit-the-meeting">Before the audit: the meeting</h2>
+<p>I'd suggest holding a meeting before the audit, not after, because the questions people have are often easier to answer up front. When I do this, we talk through the process: When will the audit run? Are they going to be making any updates to the page we want to audit, and if so, when? What results will they receive? How will issues come to them, and will they need to write work items or will that be done for them? What kind of outcomes do we expect to see from the audit?</p>
+<p>Taking the time to answer these questions up front not only helps build trust in you and your processes, it also helps the stakeholders get on board. Remember, you can't do the remediation without support. Otherwise, you end up chasing issues yourself, or worse, chasing people to fix the issues.</p>
+
+<h2 id="the-audit">The audit</h2>
+<p>I'm trying to keep this write up short and focused on the processes surrounding the audit. This could be an entire post on its own, and maybe it should! Suffice to say that you should have at least one person who has done several audits before doing the work on this audit effort. Make sure they know what standards you need to meet, and that you feel confident in their capabilities. If that's not the case and you are new to auditing but need to run one anyway, mark it as a preliminary audit and be honest with your stakeholders that things might change as you learn or gain resources. Make sure your audit results are as readable to you, the accessibility practitioner, as they will be to developers, designers, or stakeholders who haven't worked on accessibility issues before.</p>
+
+<h2 id="after-the-audit-follow-up">After the audit: follow-up</h2>
+<p>When my teams finish their audits, I send emails with the work items that resolve any issues, and metrics that reflect our findings to the stakeholders we need follow up help from. This could be different for you: Use the communication methods that work best for your organization and partners. Suggest remediation timelines and goals, and offer priority information if they need that.</p>
+<p>Whatever follow up communication you use, offer to meet again with your stakeholders, and perhaps their teams. If stakehoders disagree about your proposed timelines or goals, or team members are confused about how to fix something, talking them through the audit results often creates a better relationship and further builds trust. I often have team members attend a work item refinement meeting with a product team after running an audit, just in case they have questions about the issues we found and how to resolve them.</p>
+
+<h2 id="after-the-audit-metrics">After the audit: metrics</h2>
+<p>After your audit, you and your stakeholders will want some way to track progress. It doesn't just make folks feel better about the work they did (though this is a benefit!), it also helps show good-faith progress should a lawsuit pop up (note: I am not a lawyer or a legal professional). The metrics I find most useful are the percentage of WCAG (Web Content Accessibility Guidelines) criteria met, the number of issues, and how those issues break down by priority. Prioritizing issues is its own topic and probably its own post, but two good places to start are the University of Michigan's <a href="https://accessibility.umich.edu/how-to/manage/prioritize-it">guide to prioritizing IT for accessibility</a>, written for educational institutions, and Accessible.org has the <a href="https://accessible.org/how-to-prioritize-accessibility-issues/">how to prioritize accessibility issues guide</a>.</p>
+<p>I collect these metrics on a per-audit basis. Usually, an audit is a page or a view in whole, but sometimes it is a component or a page section. It's worth keeping track of whether an audit is a full page or not, so you can compare apples to apples (compare data that represents the same scope) for your stakeholders. Doing this will prevent a lot of confusion, in my experience.</p>
+
+<h2 id="after-the-audit-remediation-and-long-term-support">After the audit: remediation and long-term support</h2>
+<p>When the audit and communication about it are done, someone has to fix the issues. That someone may be you, or it may be an entire collection of teams who have never done this work before. Either way, remediation will take planning and capacity. If possible, I recommend getting another team involved rather than doing it yourself. Once you have taken on the responsibility of finding and fixing the issues, it can be hard to convince folks that they need to assist. This isn't because they don't want to help, but because most people don't want to have more work to do.</p>
+<p>Then comes the part that helps retire the garbage truck: education. Education is a big topic, and needs to be handled contextually. To keep this short, suffice to say that there are lots of great resources out there on how to educate different roles. If you want to pay for a course from a third-party provider like IAAP (International Association of Accessibility Professionals) or a consulting company like TPGi, that will cover you for a period of time. Eventually you will hire new people, so if you don't want to keep going back to them every year or so, you will need some internal guidance like a wiki, training courses, or documentation in your codebase and/or process docs. Keep in mind that every role from ideation to testing will encounter and need to support accessibility at some point, so your education materials should account for that support.</p>
+<p>Tooling is the other half of this long-term support plan. As an example, missing alt attributes are the most common issue I see by far. Education helps, but tooling reduces the friction so making the mistake is hard to do. We train teams, but we also use linting, automated accessibility tooling, and generate alt text for product images on the content side. All of these pieces make up a process, and that process helps support good alt text, rather than putting all of the effort for good alt text on developers or content managers to handle. Training combined with tooling is the best approach to long-term positive accessibility outcomes.</p>
+
+<h2 id="how-to-start">How to start</h2>
+<p>If you're just getting started with accessibility, and have landed here because you want to run your first audit, start with context. Ask three things: Who owns this product? Have they agreed to act on what you find? What will you measure afterward? After testing, figure out which metrics matter most to you, and which issue turned up over and over again, and what education or tooling you can offer to stop it. Then, eventually, you'll want to audit the same stuff again, and hopefully you will see that things have improved! If you're getting started and could use some advice, you're welcome to reach out with specific questions, and I'd be happy to chat!</p>
+
+      <h2 id="references">References</h2>
+<ul>
+<li><a href="https://accessibility.umich.edu/how-to/manage/prioritize-it">Prioritize IT for Accessibility, University of Michigan</a></li>
+<li><a href="https://krisrivenburgh.com/how-to-prioritize-accessibility-issues-in-seconds/">How to Prioritize Accessibility Issues in Seconds, Kris Rivenburgh</a></li>
+</ul>
+      <p class="back"><a href="../index.html#writings">Back to Writings</a></p>
+    </article>
+  </div>
+</main>
+</main>
+<script src="../js/site.js"></script>
+</body>
+</html>

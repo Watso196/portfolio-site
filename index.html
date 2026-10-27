@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>Kalib Watson | Accessibility &amp; Front-End Development Manager</title>
+<meta name="description" content="Kalib Watson leads the Accessibility, Front-End Performance, and Design Systems Development teams at WebstaurantStore.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kalib Watson | Accessibility &amp; Front-End Development Manager">
+<meta property="og:description" content="Kalib Watson leads the Accessibility, Front-End Performance, and Design Systems Development teams at WebstaurantStore.">
+<!-- TEMPORARY: fonts load from Google Fonts until Alegreya and Atkinson Hyperlegible are self-hosted (see README). Remove these three lines when that is done. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,800;1,400&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<script src="js/prefs.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="site-name" href="index.html" aria-label="Kalib Watson, home">Kalib Watson</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="#writings">Writings</a></li>
+        <li><a href="#about">About me</a></li>
+        <li><a href="#connect">Connect</a></li>
+        <li>
+          <div class="settings">
+            <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
+            <div id="settings-panel" class="settings-panel" hidden>
+              <fieldset><legend>Theme</legend>
+                <label><input type="radio" name="theme" value="dark"> Dark</label>
+                <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
+              <fieldset><legend>Fonts</legend>
+                <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
+                <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
+              <fieldset><legend>Motion</legend>
+                <label><input type="radio" name="motion" value="on"> On</label>
+                <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero wrap" id="top" aria-labelledby="intro-heading">
+    <div>
+      <h1 class="greeting" id="intro-heading">
+        <span class="big">Hi! I'm <span class="name">Kalib<svg class="loop draw reveal" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M30 58 C 18 26, 96 6, 164 7 C 236 8, 292 26, 288 54 C 284 84, 206 97, 142 95 C 74 93, 14 78, 18 46 C 20 28, 52 16, 96 11"/></svg></span>,</span>
+        <span class="role">currently Accessibility &amp; <span class="nowrap">Front-End</span> Development Manager at <a href="https://www.webstaurantstore.com/">WebstaurantStore</a>.</span>
+      </h1>
+    </div>
+    <figure class="portrait reveal">
+      <div class="portrait-frame">
+        <img src="images/kalib.jpg" alt="Kalib smiling, wearing a burgundy knit beanie and an olive t-shirt, standing outdoors by a frozen lake and dry grass." width="800" height="1000" fetchpriority="high" decoding="async">
+      </div>
+    </figure>
+  </section>
+
+  <section class="intro wrap" aria-labelledby="question-heading">
+    <div>
+      <h2 class="question" id="question-heading">What does an Accessibility &amp; <span class="nowrap">Front-End</span> Development Manager do?</h2>
+      <svg class="pen draw reveal" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 9 C 90 3, 170 12, 262 7 S 440 3, 597 8"/></svg>
+      <p>A good question for an abstract title. My work is better described as leading the <span class="hl reveal">Accessibility, Front-End Performance, and Design Systems Development teams</span>. Often, this means I am creating processes, gathering metrics, and coaching people to improve quality at every stage of our web and app experiences.</p>
+      <p class="more"><a href="writings/how-my-teams-work.html">Learn how I approach my current work</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="writings" aria-labelledby="writings-heading">
+    <div class="wrap">
+      <div>
+        <h2 id="writings-heading">Writings</h2>
+        <svg class="h-pen draw reveal" viewBox="0 0 80 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2 5 C 18 2, 34 7, 50 4 S 72 3, 78 4"/></svg>
+        <ul class="note-list">
+          <li><a href="writings/the-work-behind-an-accessibility-audit.html">The Work Behind an Accessibility Audit</a><span class="teaser">Scoping, buy-in, and follow-up: the work that decides whether an audit changes anything.</span></li>
+          <li><a href="writings/react-native-accessibility-needs-more-rigor.html">React Native Accessibility Deserves More Rigor</a><span class="teaser">What's missing for accessibility in React Native, and why testing and documentation matter until it improves.</span></li>
+          <li><a href="writings/how-my-teams-work.html">How my teams work together</a><span class="teaser">How design systems, accessibility, and performance each shape one "Save for later" button.</span></li>
+        </ul>
+        <!-- WRITINGS: list the 3 most recent here. When there are more than 3, move the older ones into a disclosure after this list:
+        <details class="disclosure">
+          <summary>See all writings</summary>
+          <div class="disclosure-body">
+            <ul class="note-list">
+              <li><a href="writings/older-writing.html">Title</a><span class="teaser">One-line teaser.</span></li>
+            </ul>
+          </div>
+        </details>
+        A teaser is optional: <span class="teaser">One-line teaser.</span> right after the link. -->
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" id="about" aria-labelledby="about-heading">
+    <div class="wrap">
+      <div>
+        <h2 id="about-heading">About me</h2>
+        <svg class="h-pen draw reveal" viewBox="0 0 80 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2 5 C 18 2, 34 7, 50 4 S 72 3, 78 4"/></svg>
+        <p>I've been in the accessibility field for about a decade now, which is wild! I love systems-based games, write poetry and stories in my spare time, and I run a fully hand-rolled D&amp;D game every week.</p>
+        <details class="disclosure">
+          <summary>Read what my D&amp;D players got up to last week</summary>
+          <div class="disclosure-body"><p>My players bashed a clan of bandits, and met a sentient pickle barrel named Vara, who they discovered was trapped in the desert. They offered to help her by gathering magical components to help her travel home, so she can become un-pickle barreled.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="connect" aria-labelledby="connect-heading">
+    <div class="wrap">
+      <div>
+        <h2 id="connect-heading">Connect</h2>
+        <svg class="h-pen draw reveal" viewBox="0 0 80 8" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2 5 C 18 2, 34 7, 50 4 S 72 3, 78 4"/></svg>
+        <ul class="links">
+          <li><a href="https://www.linkedin.com/in/kalib-watson/">LinkedIn</a></li>
+          <li><a href="https://github.com/Watso196">GitHub</a></li>
+          <li class="email-item"><span class="no-js-note">Email shows up here when scripts are on. Until then, LinkedIn works.</span><button type="button" class="btn reveal-email">Show my email</button></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="js/site.js"></script>
+</body>
+</html>

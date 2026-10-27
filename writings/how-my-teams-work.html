@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light">
+<title>How my teams work together | Kalib Watson</title>
+<meta name="description" content="How accessibility, performance, and design systems work together to build quality end to end, told through the story of one button.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How my teams work together | Kalib Watson">
+<meta property="og:description" content="How accessibility, performance, and design systems work together to build quality end to end, told through the story of one button.">
+<!-- TEMPORARY: fonts load from Google Fonts until Alegreya and Atkinson Hyperlegible are self-hosted (see README). Remove these three lines when that is done. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,800;1,400&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<script src="../js/prefs.js"></script>
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-header">
+  <div class="wrap">
+    <a class="site-name" href="../index.html" aria-label="Kalib Watson, home">Kalib Watson</a>
+    <nav class="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="../index.html#writings">Writings</a></li>
+        <li><a href="../index.html#about">About me</a></li>
+        <li><a href="../index.html#connect">Connect</a></li>
+        <li>
+          <div class="settings">
+            <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
+            <div id="settings-panel" class="settings-panel" hidden>
+              <fieldset><legend>Theme</legend>
+                <label><input type="radio" name="theme" value="dark"> Dark</label>
+                <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
+              <fieldset><legend>Fonts</legend>
+                <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
+                <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
+              <fieldset><legend>Motion</legend>
+                <label><input type="radio" name="motion" value="on"> On</label>
+                <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="page">
+  <div class="wrap">
+    <nav class="toc" aria-labelledby="toc-title">
+      <p class="toc-title" id="toc-title">On this page</p>
+      <ul>
+        <li><a href="#the-button">The button</a></li>
+        <li><a href="#defined-once">Defined once</a></li>
+        <li><a href="#understood-by-everyone">Understood by everyone</a></li>
+        <li><a href="#fast-enough-to-feel-instant">Fast enough to feel instant</a></li>
+        <li><a href="#combining-disciplines">Combining disciplines</a></li>
+        <li><a href="#back-to-the-button">Back to the button</a></li>
+      </ul>
+    </nav>
+    <article class="prose">
+      <h1 class="page-title">How my teams work together</h1>
+      <svg class="pen draw reveal" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 9 C 90 3, 170 12, 262 7 S 440 3, 597 8"/></svg>
+      <p class="post-meta">Published <time datetime="2026-10">October 2026</time></p>
+
+<p>If you're here, you're probably looking to learn more about how I run the accessibility, performance, and design systems teams. I could spend a long time talking about process creation and stakeholders, but I think a better way is to just use an example!</p>
+
+<p>Let's say we have a button, the most basic component of the web. It says "Save for later."</p>
+<p>In my experience, quality is decided at several different checkpoints and by different people. To be clear, this is a good thing! We don't want our users to have a great accessible experience but wait 10 minutes for a save operation, because they're just going to leave for a different reason.</p>
+
+<h2 id="the-button">The button</h2>
+<div class="demo">
+  <p>Here's the button. Try it with a mouse, a keyboard, or a screen reader.</p>
+  <div class="demo-stage">
+    <button type="button" class="btn demo-btn">Save for later</button>
+    <p class="demo-status" id="demo-status" role="status"></p>
+  </div>
+  <p class="demo-option"><label><input type="checkbox" id="demo-fail"> Make the save fail</label></p>
+</div>
+<details class="disclosure">
+  <summary>What each team did for this button</summary>
+  <div class="disclosure-body">
+    <ul>
+      <li><a href="#defined-once">Defined once:</a> the color, size, spacing, and focus style come from the design system, so this is the same button used everywhere else.</li>
+      <li><a href="#understood-by-everyone">Understood by everyone:</a> it's a real <code>button</code> element, so a keyboard can reach it and a screen reader announces it as a button. What happens when you press it is announced as a status message.</li>
+      <li><a href="#fast-enough-to-feel-instant">Fast enough to feel instant:</a> it responds right away with "Saving…", even when the save itself takes a moment.</li>
+      <li><a href="#fast-enough-to-feel-instant">Reliable:</a> if the save fails, it says what happened and what to try next. Use the checkbox to see it.</li>
+    </ul>
+  </div>
+</details>
+
+<h2 id="defined-once">Defined once</h2>
+<p>The button exists as a single component, so the right decisions get made once and inherited everywhere: color, size, spacing, focus style. This is the design systems work, creating reusable and structured tooling, while staying flexible enough to cover most of what our consumers need.</p>
+<p>Our design systems engineers work directly with designers, performance engineers, and accessibility professionals as they develop. This helps us ensure that our system is actually working as a system, and not just a component library. If there isn't parity across the design and development language for properties or sub-components, concepts get lost in translation easily. We want to create good experiences while building and while consuming the system, for all users.</p>
+<p>If a component in our system gets too granular, it becomes too narrow to be useful. If we required that our button be red, there would only be so many places we could use it. That said, we also don't want consumers to be able to add an icon to a button and not provide an accessible name. We have to make sure that we are building a stable and flexible system here.</p>
+
+<h2 id="understood-by-everyone">Understood by everyone</h2>
+<p>Our button uses a <code>button</code> element, so a keyboard can reach it and a screen reader announces what it is. Pressing it performs the save action as expected, and any success or error messaging is announced by screen readers. It's big enough to hit reliably, and its color contrast meets text and UI requirements. If this is a base button component we're talking about, we've also thought about properties to make it a toggle button, adding loading indicators, and how to manage the accessibility of icon-only buttons.</p>
+<p>Questions like those last few are where having an accessibility team really comes in handy. Our acccessibility engineers are able to collaborate with the design system developers, for example when a component is being scoped out. Then developers can better assess feasibility of the requirements they need to meet, and we know we will get an accessible product at the end of the process.</p>
+<p>While a lot of what I've cited here is about meeting established guidelines, having our button meet a guideline and having it work well for an individual are not always identical outcomes. My accessibility team and I care more about the second, because though guidelines may be well-intentioned, knowing how to apply them to improve a user experience is the real accessibility work.</p>
+
+<h2 id="fast-enough-to-feel-instant">Fast enough to feel instant</h2>
+<p>Pressing our button should feel immediate, which depends on what the button costs to load, what script it runs, and whether the page jumps around when it responds. It also depends upon our partners in other areas of the application, and our relationships with them to help address issues with APIs or data access.</p>
+<p>As soon as we know what we're building, we want to talk about how we make it both fast and reliable for our users. This is where performance engineers can help not only identify tooling and best practices, but also set up metrics tracking for specific use cases or create new utilities where they might be needed. This enables us to build features and fix bugs faster with the confidence that the output will provide a good experience.</p>
+<p>In front-end performance work, our goal is to make the interaction <em>feel</em> as immediate as possible for our user. That might mean the save function itself is slow, but we show a loading indicator. In other functions, we might have the page update optimistically to show loading content sections, for example. Feeling fast keeps users around when actually being fast can't happen.</p>
+<p>We also want our work to be reliable. If the button's save operation hits an error, we need to make sure the user knows what happened. They'll also want to know if they can fix it, or if they need to reach out for help, and to who. And what happens if the button can't load? At the root of all of this is ensuring we don't write code that will break easily. Testing strategies and tooling can help us here, and that requires its own planning.</p>
+
+<h2 id="combining-disciplines">Combining disciplines</h2>
+<p>Even though we have experts to test each of these checkpoints, teaching others how to approach work in the ways we approach it is a major factor in my teams' success. We pair with developers and designers, create resources and documentation, and share best practices and issues often enough that the folks we work with are consistently learning alongside us. That goes for my team members, too. Design systems developers, performance engineers, and accessibility specialists are all working together and learning from each other consistently. Without that system of support, silos form and it's easy to have collaboration stall out.</p>
+
+<h2 id="back-to-the-button">Back to the button</h2>
+<p>At the end of this journey, we release our "Save for later" button and someone presses it.</p>
+<p>It's (almost) the same button they've pressed everywhere else on the site, because it's defined once. If they're using a keyboard or a screen reader, it works seamlessly and doesn't produce any surprises. It quickly updates to show progress on the save interaction, and when it fails, users get clear messaging about what happened and what they could do about it. If we missed any of those checkpoints, one of our users would eventually be left in the lurch.</p>
+<p>When all of it works, the person pressing the button doesn't think twice about it. That's the goal. We want the user experience to feel like it was exactly the seamless, quick, simple process they expected. Even better, if possible!</p>
+
+      <p class="back"><a href="../index.html#writings">Back to Writings</a></p>
+    </article>
+  </div>
+</main>
+<script src="../js/site.js"></script>
+<script src="../js/button-demo.js"></script>
+</body>
+</html>

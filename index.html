@@ -26,20 +26,18 @@
         <li><a href="#writings">Writings</a></li>
         <li><a href="#about">About me</a></li>
         <li><a href="#connect">Connect</a></li>
-        <li>
-          <div class="settings">
-            <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
-            <div id="settings-panel" class="settings-panel" hidden>
-              <fieldset><legend>Theme</legend>
-                <label><input type="radio" name="theme" value="dark"> Dark</label>
-                <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
-              <fieldset><legend>Fonts</legend>
-                <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
-                <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
-              <fieldset><legend>Motion</legend>
-                <label><input type="radio" name="motion" value="on"> On</label>
-                <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
-            </div>
+        <li class="settings">
+          <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
+          <div id="settings-panel" class="settings-panel" hidden>
+            <fieldset><legend>Theme</legend>
+              <label><input type="radio" name="theme" value="dark"> Dark</label>
+              <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
+            <fieldset><legend>Fonts</legend>
+              <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
+              <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
+            <fieldset><legend>Motion</legend>
+              <label><input type="radio" name="motion" value="on"> On</label>
+              <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
           </div>
         </li>
       </ul>
@@ -47,22 +45,22 @@
   </div>
 </header>
 
-<main id="main">
-  <section class="hero wrap" id="top" aria-labelledby="intro-heading">
+<main id="main" tabindex="-1">
+  <section class="hero wrap" id="top">
     <div>
       <h1 class="greeting" id="intro-heading">
         <span class="big">Hi! I'm <span class="name">Kalib<svg class="loop draw reveal" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M30 58 C 18 26, 96 6, 164 7 C 236 8, 292 26, 288 54 C 284 84, 206 97, 142 95 C 74 93, 14 78, 18 46 C 20 28, 52 16, 96 11"/></svg></span>,</span>
         <span class="role">currently Accessibility &amp; <span class="nowrap">Front-End</span> Development Manager at <a href="https://www.webstaurantstore.com/">WebstaurantStore</a>.</span>
       </h1>
     </div>
-    <figure class="portrait reveal">
+    <div class="portrait reveal">
       <div class="portrait-frame">
         <img src="images/kalib.jpg" alt="Kalib smiling, wearing a burgundy knit beanie and an olive t-shirt, standing outdoors by a frozen lake and dry grass." width="800" height="1000" fetchpriority="high" decoding="async">
       </div>
-    </figure>
+    </div>
   </section>
 
-  <section class="intro wrap" aria-labelledby="question-heading">
+  <section class="intro wrap">
     <div>
       <h2 class="question" id="question-heading">What does an Accessibility &amp; <span class="nowrap">Front-End</span> Development Manager do?</h2>
       <svg class="pen draw reveal" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 9 C 90 3, 170 12, 262 7 S 440 3, 597 8"/></svg>
@@ -117,7 +115,7 @@
         <ul class="links">
           <li><a href="https://www.linkedin.com/in/kalib-watson/">LinkedIn</a></li>
           <li><a href="https://github.com/Watso196">GitHub</a></li>
-          <li class="email-item"><span class="no-js-note">Email shows up here when scripts are on. Until then, LinkedIn works.</span><button type="button" class="btn reveal-email">Show my email</button></li>
+          <li class="email-item"><span class="no-js-note">Email shows up here when scripts are on. Until then, LinkedIn works.</span></li>
         </ul>
       </div>
     </div>

@@ -9,7 +9,9 @@
   panel.addEventListener('change',function(e){var t=e.target;if(t.name){P.p[t.name]=t.value;save();P.apply();sync();}});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)close(true);});
   document.addEventListener('click',function(e){if(!panel.hidden&&!e.target.closest('.settings'))close(false);});
-  sync();
+  // Close when Tab moves focus out of the settings, so the open panel never covers what gets focus next.
+  btn.parentNode.addEventListener('focusout',function(e){if(!panel.hidden&&e.relatedTarget&&!btn.parentNode.contains(e.relatedTarget))close(false);});
+  sync();P.onapply=sync;
   // Measure expressive vs plain fonts in this browser and set the size factors (average of x-height ratio and width ratio).
   function metrics(font,text){try{var c=document.createElement('canvas').getContext('2d');c.font=font;return {x:c.measureText('x').actualBoundingBoxAscent/100,w:c.measureText(text).width};}catch(e){return null;}}
   function factor(e,p){if(!e||!p||!p.x||!p.w)return 0;var v=(e.x/p.x+e.w/p.w)/2;return v>.7&&v<1.1?v:0;}
@@ -21,19 +23,21 @@
       var fd=factor(metrics('800 100px '+serifE,T2),metrics('700 100px '+serifP,T2));
       if(fb)root.style.setProperty('--plain-fb',fb.toFixed(3));if(fd)root.style.setProperty('--plain-fd',fd.toFixed(3));});})();
   try{sessionStorage.setItem(window.__seenKey,'1');}catch(e){}
-  // Contact email is assembled on click, so it never appears in the page source.
-  var eb=document.querySelector('.reveal-email');
-  if(eb)eb.addEventListener('click',function(){
-    var addr=['kalibwatson','contact'].join('.')+'@'+['gmail','com'].join('.');
-    var a=document.createElement('a');a.href='mailto:'+addr;a.textContent=addr;
-    eb.replaceWith(a);a.focus();
-  });
+  // Contact email is assembled by script, so it never appears in the page source.
+  var ei=document.querySelector('.email-item');
+  if(ei){
+    var user=['kalibwatson','contact'].join('.'),domain=['gmail','com'].join('.');
+    // <wbr> lets narrow screens break the address before the @ instead of cutting it off.
+    var a=document.createElement('a');a.href='mailto:'+user+'@'+domain;a.append(user,document.createElement('wbr'),'@'+domain);
+    ei.append(a);
+  }
   // One-shot reveals. The bottom 22% of the window is ignored, so anything near the fold waits for a real scroll.
   var items=document.querySelectorAll('.reveal');
   if('IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.2,rootMargin:'0px 0px -22% 0px'});
     items.forEach(function(el){io.observe(el);});
   }else{items.forEach(function(el){el.classList.add('in');});}
+  window.__siteReady=true;
 })();
 
 // "On this page": mark the section currently being read.

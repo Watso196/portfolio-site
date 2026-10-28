@@ -26,20 +26,18 @@
         <li><a href="../index.html#writings">Writings</a></li>
         <li><a href="../index.html#about">About me</a></li>
         <li><a href="../index.html#connect">Connect</a></li>
-        <li>
-          <div class="settings">
-            <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
-            <div id="settings-panel" class="settings-panel" hidden>
-              <fieldset><legend>Theme</legend>
-                <label><input type="radio" name="theme" value="dark"> Dark</label>
-                <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
-              <fieldset><legend>Fonts</legend>
-                <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
-                <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
-              <fieldset><legend>Motion</legend>
-                <label><input type="radio" name="motion" value="on"> On</label>
-                <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
-            </div>
+        <li class="settings">
+          <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
+          <div id="settings-panel" class="settings-panel" hidden>
+            <fieldset><legend>Theme</legend>
+              <label><input type="radio" name="theme" value="dark"> Dark</label>
+              <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
+            <fieldset><legend>Fonts</legend>
+              <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
+              <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
+            <fieldset><legend>Motion</legend>
+              <label><input type="radio" name="motion" value="on"> On</label>
+              <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
           </div>
         </li>
       </ul>
@@ -47,7 +45,7 @@
   </div>
 </header>
 
-<main id="main" class="page">
+<main id="main" class="page" tabindex="-1">
   <div class="wrap">
     <nav class="toc" aria-labelledby="toc-title">
       <p class="toc-title" id="toc-title">On this page</p>
@@ -98,7 +96,7 @@
 
 <h2 id="understood-by-everyone">Understood by everyone</h2>
 <p>Our button uses a <code>button</code> element, so a keyboard can reach it and a screen reader announces what it is. Pressing it performs the save action as expected, and any success or error messaging is announced by screen readers. It's big enough to hit reliably, and its color contrast meets text and UI requirements. If this is a base button component we're talking about, we've also thought about properties to make it a toggle button, adding loading indicators, and how to manage the accessibility of icon-only buttons.</p>
-<p>Questions like those last few are where having an accessibility team really comes in handy. Our acccessibility engineers are able to collaborate with the design system developers, for example when a component is being scoped out. Then developers can better assess feasibility of the requirements they need to meet, and we know we will get an accessible product at the end of the process.</p>
+<p>Questions like those last few are where having an accessibility team really comes in handy. Our accessibility engineers are able to collaborate with the design system developers, for example when a component is being scoped out. Then developers can better assess feasibility of the requirements they need to meet, and we know we will get an accessible product at the end of the process.</p>
 <p>While a lot of what I've cited here is about meeting established guidelines, having our button meet a guideline and having it work well for an individual are not always identical outcomes. My accessibility team and I care more about the second, because though guidelines may be well-intentioned, knowing how to apply them to improve a user experience is the real accessibility work.</p>
 
 <h2 id="fast-enough-to-feel-instant">Fast enough to feel instant</h2>

@@ -1,6 +1,6 @@
 # Kalib Watson: personal site
 
-Small, durable, no build step. Plain HTML and CSS, plus two small scripts (`js/prefs.js`, `js/site.js`). Everything important works without JavaScript; the scripts add display settings, animations, and the email reveal.
+Small, durable, no build step. Plain HTML and CSS, plus two small scripts (`js/prefs.js`, `js/site.js`). Everything important works without JavaScript; the scripts add display settings, animations, and the contact email (built by script so it isn't in the page source).
 
 ## Structure
 
@@ -8,7 +8,7 @@ Small, durable, no build step. Plain HTML and CSS, plus two small scripts (`js/p
 - `writings/how-my-teams-work.html`: the first writing
 - `css/styles.css`: design tokens at the top, then base, header, settings, motion, hero, sections, writing pages
 - `js/prefs.js`: loads in `<head>`; applies saved theme/fonts/motion before first paint
-- `js/site.js`: settings panel, plain-font size matching, email reveal, scroll reveals
+- `js/site.js`: settings panel, plain-font size matching, contact email, scroll reveals
 - `js/button-demo.js`: the live "Save for later" button on the teams writing (only that page loads it)
 - `images/kalib.jpg`: the portrait (800x1000)
 

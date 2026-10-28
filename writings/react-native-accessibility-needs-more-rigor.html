@@ -26,20 +26,18 @@
         <li><a href="../index.html#writings">Writings</a></li>
         <li><a href="../index.html#about">About me</a></li>
         <li><a href="../index.html#connect">Connect</a></li>
-        <li>
-          <div class="settings">
-            <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
-            <div id="settings-panel" class="settings-panel" hidden>
-              <fieldset><legend>Theme</legend>
-                <label><input type="radio" name="theme" value="dark"> Dark</label>
-                <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
-              <fieldset><legend>Fonts</legend>
-                <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
-                <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
-              <fieldset><legend>Motion</legend>
-                <label><input type="radio" name="motion" value="on"> On</label>
-                <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
-            </div>
+        <li class="settings">
+          <button type="button" class="settings-toggle" aria-expanded="false" aria-controls="settings-panel">Display settings</button>
+          <div id="settings-panel" class="settings-panel" hidden>
+            <fieldset><legend>Theme</legend>
+              <label><input type="radio" name="theme" value="dark"> Dark</label>
+              <label><input type="radio" name="theme" value="light"> Light</label></fieldset>
+            <fieldset><legend>Fonts</legend>
+              <label><input type="radio" name="fonts" value="expressive"> Expressive</label>
+              <label><input type="radio" name="fonts" value="plain"> Plain</label></fieldset>
+            <fieldset><legend>Motion</legend>
+              <label><input type="radio" name="motion" value="on"> On</label>
+              <label><input type="radio" name="motion" value="off"> Off</label></fieldset>
           </div>
         </li>
       </ul>
@@ -47,7 +45,7 @@
   </div>
 </header>
 
-<main id="main" class="page">
+<main id="main" class="page" tabindex="-1">
   <div class="wrap">
     <nav class="toc" aria-labelledby="toc-title">
       <p class="toc-title" id="toc-title">On this page</p>
@@ -73,7 +71,7 @@
       <svg class="pen draw reveal" viewBox="0 0 600 14" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 9 C 90 3, 170 12, 262 7 S 440 3, 597 8"/></svg>
       <p class="post-meta">Published <time datetime="2026-10">October 2026</time></p>
 
-<p>My team recently started auditing our new mobile app, and since has since spent a lot of time looking for good material on accessibility in React Native. Sadly, we've mostly come up short and created our own internal resources. For web, there's a huge body of guidance, testing tools, and people who have written down what they learned. For React Native, there's much less, and what exists sometimes disagrees with itself. I'm frustrated by it, so this post is both a call to action to fill that gap and the start of my attempt to help do so.</p>
+<p>My team recently started auditing our new mobile app, and has since spent a lot of time looking for good material on accessibility in React Native. Sadly, we've mostly come up short and created our own internal resources. For web, there's a huge body of guidance, testing tools, and people who have written down what they learned. For React Native, there's much less, and what exists sometimes disagrees with itself. I'm frustrated by it, so this post is both a call to action to fill that gap and the start of my attempt to help do so.</p>
 <p>I'm mostly writing here to my fellow accessibility professionals, but for React Native developers looking for the same answers you might find some value here! I've tried to be clear about what I've verified, what comes from our own testing, and what I couldn't find out because the picture here is fuzzy, and I don't want to make it sound complete when I'm still learning, too.</p>
 
 <h2 id="what-we-dont-have-yet">What we don't have yet</h2>
@@ -87,7 +85,7 @@
 <p>In HTML, you can change the reading and focus order by changing the code. CSS can still affect the accuracy of that ordering, but you have a dependable mechanism to affect that experience. Native iOS and Android also give developers a way to set order through their props. React Native doesn't expose that tooling, though the base APIs they tie their work to (iOS and Android) support it.</p>
 <p>For mobile apps, the order comes from the platform's accessibility API, which interprets the UI layout. On Android, Google's docs say TalkBack follows the view hierarchy by default for classic views, while Jetpack Compose uses position, left to right and top to bottom. (The view hierarchy, though closer, isn't the same thing as code order, since React Native turns components into native views along the way.) We haven't confirmed exactly how React Native's Android output is ordered. What we can say from testing is that it doesn't simply follow code order. The same is very true for iOS's order output.</p>
 <p>In practice, this means moving code around often does very little, and moving things on screen might help but often means we're adapting the layout of our app with sometimes no result. Many times, we find we have a reasonable layout, such as a grid of card content, and it just isn't presented properly. When this happens, we don't have a good way to resolve the issue without resorting to hacky <code>accessible</code> containerization of elements.</p>
-<p>React Native's answer is <code>experimental_accessibilityOrder</code>, and it's a good potential update. It takes an array of <code>nativeID</code>s that sets the order assistive technology focuses a view's children. However, it's still experimental after being released in 2025 with v0.80.0. The list is also exhaustive, so any accessible child you leave out becomes unreachable. It solves a clear problem, but the tool isn't ready. Until it is, reading order is something we have no tooling to effect, meaning there are poor experiences that we just cannot repair.</p>
+<p>React Native's answer is <code>experimental_accessibilityOrder</code>, and it's a good potential update. It takes an array of <code>nativeID</code>s that sets the order assistive technology focuses a view's children. However, it's still experimental after being released in 2025 with v0.80.0. The list is also exhaustive, so any accessible child you leave out becomes unreachable. It solves a clear problem, but the tool isn't ready. Until it is, reading order is something we have no tooling to affect, meaning there are poor experiences that we just cannot repair.</p>
 
 <h3 id="links-in-inline-text">Links in inline text</h3>
 <p>Another underserved area is links within inline text. People are paying attention, but the conversation is limited and support is slow. In React Native, a link nested inside inline text often doesn't behave like a link for assistive technology. A <a href="https://github.com/facebook/react-native/issues/32004">GitHub issue</a> opened in August 2021 describes the problem and is still open. Our testing shows that Bluetooth keyboards don't have a clear way to reach these links, and users who are unfamiliar with all of their screen readers' features struggle to use them.</p>
@@ -101,7 +99,7 @@
 
 <h3 id="reliable-recommendations-and-patterns">Reliable recommendations and patterns</h3>
 <p>The React Native docs and the linting plugin I mentioned both push you toward adding <code>accessibilityHint</code> to interactive controls. In our testing, the <code>has-accessibility-hint</code> rule was on by default, and required adding <code>accessibilityHint</code> to any interactive control. I certainly agree that the <code>accessibilityHint</code> prop is useful and should be considered, but adding "Go back to the previous page" to a button named "Back" isn't really helpful context for users. My team found that requiring a prop like this tends to lead to that type of repetitive outcome more often than not.</p>
-<pre tabindex="0"><code>// Redundant: the role and label already say what pressing this does
+<pre tabindex="0" role="region" aria-label="Code example: redundant hint"><code>// Redundant: the role and label already say what pressing this does
 &lt;Pressable
   accessibilityRole="button"
   accessibilityLabel="Add to cart"
@@ -109,7 +107,7 @@
   onPress={addToCart}
 &gt;</code></pre>
 <p>When a control has a role and a clear label, the hint tends to repeat them. A screen reader user would hear the above example as "Add to cart, button, adds this item to your cart."</p>
-<pre tabindex="0"><code>// Useful: the label and role don't say what happens next
+<pre tabindex="0" role="region" aria-label="Code example: useful hint"><code>// Useful: the label and role don't say what happens next
 &lt;Pressable
   accessibilityRole="button"
   accessibilityLabel="Order 1042, shipped Oct 14"
@@ -138,8 +136,6 @@
       <p class="back"><a href="../index.html#writings">Back to Writings</a></p>
     </article>
   </div>
-</main>
-</main>
 </main>
 <script src="../js/site.js"></script>
 </body>

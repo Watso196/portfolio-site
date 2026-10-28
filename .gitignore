@@ -5,3 +5,6 @@ drafts/
 .DS_Store
 Thumbs.db
 *.bak
+
+# Local Claude Code settings
+.claude/

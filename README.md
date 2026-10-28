@@ -4,7 +4,7 @@ Small, durable, no build step. Plain HTML and CSS, plus two small scripts (`js/p
 
 ## Structure
 
-- `index.html`: the one-page home (hero, intro, Writings, About me, Connect)
+- `index.html`: the one-page home (hero, intro, Writings, About me), plus the footer
 - `writings/how-my-teams-work.html`: the first writing
 - `css/styles.css`: design tokens at the top, then base, header, settings, motion, hero, sections, writing pages
 - `js/prefs.js`: loads in `<head>`; applies saved theme/fonts/motion before first paint
@@ -18,7 +18,7 @@ Open `index.html` directly in a browser, or use VS Code Live Server. With Node: 
 
 ## Adding a writing
 
-1. Copy `writings/how-my-teams-work.html`, change the title, description, and body.
+1. Copy `writings/how-my-teams-work.html`, change the title, description, and body. Keep the footer (Connect links and copyright) identical on every page, and update the year in all of them.
 2. In `index.html`, add an `<li>` to the Writings list (optional teaser: `<span class="teaser">…</span>` after the link).
 3. Keep only the 3 most recent in the visible list. Move older ones into the "See all writings" `<details>` block (template is in a comment in `index.html`).
 

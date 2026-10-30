@@ -1,0 +1,74 @@
+<!doctype html>
+<!-- TEMPORARY: deliberately inaccessible page for testing the accessibility scanner.
+     Delete this file and its entry in .github/workflows/a11y-scan.yml when the test is done. -->
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="robots" content="noindex">
+<title>Accessibility scanner test page</title>
+</head>
+<body>
+<main>
+  <h1>Accessibility scanner test page</h1>
+  <p>This page is intentionally broken so the scanner has something to find.</p>
+
+  <h4>Heading level skipped (h1 to h4)</h4>
+
+  <!-- Image with no alt text -->
+  <img src="images/kalib.jpg" width="40" height="50">
+
+  <!-- Button and link with no accessible name -->
+  <button type="button"></button>
+  <a href="#test"></a>
+
+  <!-- Low-contrast text (about 2.3:1) -->
+  <p style="color:#aaa;background:#fff">This text is light grey on white and is hard to read.</p>
+
+  <!-- Form field with no label -->
+  <input type="text">
+
+  <!-- Focusable element hidden from assistive technology -->
+  <a href="#test" aria-hidden="true">Hidden but focusable link</a>
+
+  <!-- Positive tabindex -->
+  <div tabindex="5">Element with a positive tabindex</div>
+
+  <h2>Input with only a placeholder</h2>
+  <!-- The placeholder is the only thing naming this field, and it disappears as soon as someone types -->
+  <input type="email" placeholder="Email address">
+
+  <h2>More controls with no accessible name</h2>
+  <!-- Icon-only button: the icon is hidden from assistive technology and there is no text or label -->
+  <button type="button"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8"/></svg></button>
+  <!-- Link whose only content is an image with no alt text -->
+  <a href="#test"><img src="images/kalib.jpg" width="20" height="25"></a>
+  <!-- Custom button role with no name -->
+  <div role="button" tabindex="0" style="display:inline-block;width:2rem;height:2rem;background:#ccc"></div>
+  <!-- Select with no label -->
+  <select><option>One</option><option>Two</option></select>
+
+  <h2>Very small interactive items</h2>
+  <!-- Named, but much smaller than 24 by 24 CSS pixels and touching each other -->
+  <button type="button" aria-label="Tiny one" style="width:10px;height:10px;padding:0;margin:0"></button><button type="button" aria-label="Tiny two" style="width:10px;height:10px;padding:0;margin:0"></button><button type="button" aria-label="Tiny three" style="width:10px;height:10px;padding:0;margin:0"></button>
+  <p><a href="#test" style="font-size:8px">tiny link</a> <a href="#test" style="font-size:8px">another tiny link</a></p>
+
+  <h2>Modal with poor focus management</h2>
+  <button type="button" id="open-modal">Open dialog</button>
+  <!-- No dialog role, no accessible name, focus never moves into it, no focus trap, Escape does nothing,
+       the close control is a div that a keyboard can't reach, and focus isn't returned afterwards. -->
+  <div id="modal" style="display:none;position:fixed;top:20%;left:20%;right:20%;padding:2rem;background:#fff;border:2px solid #000;z-index:10">
+    <p>Subscribe to our newsletter!</p>
+    <div id="close-modal" style="display:inline-block;padding:.25rem .5rem;background:#ddd;cursor:pointer">Close</div>
+  </div>
+</main>
+<script>
+  document.getElementById('open-modal').addEventListener('click', function () {
+    document.getElementById('modal').style.display = 'block';
+  });
+  document.getElementById('close-modal').addEventListener('click', function () {
+    document.getElementById('modal').style.display = 'none';
+  });
+</script>
+</body>
+</html>

@@ -1,20 +1,39 @@
 name: Accessibility Scanner
 
-# Runs after each GitHub Pages deployment of main finishes, so it scans the version that just went live
-# (triggering on the push itself could scan the previous deploy). Can also be run by hand from the Actions tab.
+# Runs on each push to main, after waiting for GitHub Pages to publish that commit so the scan sees the live version.
+# Can also be run by hand from the Actions tab (no waiting).
 on:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    types: [completed]
+  push:
     branches: [main]
   workflow_dispatch:
 
 jobs:
   accessibility_scanner:
-    # Skip when the deployment failed; manual runs always go ahead.
-    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    permissions:
+      pages: read
     steps:
+      - name: Wait for Pages to publish this commit
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 40); do
+            read -r status commit < <(gh api "repos/${{ github.repository }}/pages/builds/latest" --jq '[.status, .commit] | @tsv')
+            echo "Pages build: $status ($commit)"
+            if [ "$commit" = "$GITHUB_SHA" ] && [ "$status" = "built" ]; then
+              sleep 20 # let the CDN catch up
+              exit 0
+            fi
+            if [ "$commit" = "$GITHUB_SHA" ] && [ "$status" = "errored" ]; then
+              echo "Pages build failed; nothing to scan."
+              exit 1
+            fi
+            sleep 15
+          done
+          echo "Timed out waiting for Pages to publish $GITHUB_SHA."
+          exit 1
+
       - uses: github/accessibility-scanner@v3
         with:
           # Published pages only. drafts/ is not deployed, so it can't be scanned.
@@ -23,9 +42,10 @@ jobs:
             https://kalibwatson.com/writings/how-my-teams-work.html
             https://kalibwatson.com/writings/the-work-behind-an-accessibility-audit.html
             https://kalibwatson.com/writings/react-native-accessibility-needs-more-rigor.html
+            https://kalibwatson.com/a11y-test.html
           repository: Watso196/portfolio-site
           # Fine-grained PAT stored as a repository secret; the default GITHUB_TOKEN won't work.
           token: ${{ secrets.GH_TOKEN }}
           cache_key: portfolio-main
-          # First run: logs what would be filed without creating issues. Delete this line to start filing for real.
+          # Logs what would be filed without creating issues. Delete this line to start filing for real.
           dry_run: true

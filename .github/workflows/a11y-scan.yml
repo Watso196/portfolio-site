@@ -47,3 +47,5 @@ jobs:
           # Fine-grained PAT stored as a repository secret; the default GITHUB_TOKEN won't work.
           token: ${{ secrets.GH_TOKEN }}
           cache_key: portfolio-main
+          # Run both engines so we can compare what each one finds.
+          scans: '["axe","accesslint"]'

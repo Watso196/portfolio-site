@@ -34,7 +34,7 @@ Open `index.html` directly in a browser, or use VS Code Live Server. With Node: 
 
 - Needs a fine-grained personal access token saved as the repository secret `GH_TOKEN` (the default token won't work).
 - Scans only the published pages listed in the workflow. Add new writings to its `urls` list.
-- `dry_run: true` logs findings without filing issues; remove it to file for real.
+- Add `dry_run: true` to log findings without filing issues.
 
 ## Open ideas
 

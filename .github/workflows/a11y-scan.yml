@@ -47,5 +47,3 @@ jobs:
           # Fine-grained PAT stored as a repository secret; the default GITHUB_TOKEN won't work.
           token: ${{ secrets.GH_TOKEN }}
           cache_key: portfolio-main
-          # Logs what would be filed without creating issues. Delete this line to start filing for real.
-          dry_run: true

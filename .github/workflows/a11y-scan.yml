@@ -1,0 +1,31 @@
+name: Accessibility Scanner
+
+# Runs after each GitHub Pages deployment of main finishes, so it scans the version that just went live
+# (triggering on the push itself could scan the previous deploy). Can also be run by hand from the Actions tab.
+on:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  accessibility_scanner:
+    # Skip when the deployment failed; manual runs always go ahead.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: github/accessibility-scanner@v3
+        with:
+          # Published pages only. drafts/ is not deployed, so it can't be scanned.
+          urls: |
+            https://kalibwatson.com/
+            https://kalibwatson.com/writings/how-my-teams-work.html
+            https://kalibwatson.com/writings/the-work-behind-an-accessibility-audit.html
+            https://kalibwatson.com/writings/react-native-accessibility-needs-more-rigor.html
+          repository: Watso196/portfolio-site
+          # Fine-grained PAT stored as a repository secret; the default GITHUB_TOKEN won't work.
+          token: ${{ secrets.GH_TOKEN }}
+          cache_key: portfolio-main
+          # First run: logs what would be filed without creating issues. Delete this line to start filing for real.
+          dry_run: true

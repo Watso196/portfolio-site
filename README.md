@@ -28,6 +28,14 @@ Open `index.html` directly in a browser, or use VS Code Live Server. With Node: 
 - Internal links end in `index.html` so the site works from disk. Switch to clean paths at deploy time if wanted.
 - Add `og:image` and `og:url` once there is a domain.
 
+## Accessibility scanner
+
+`.github/workflows/a11y-scan.yml` runs [GitHub's accessibility scanner](https://github.com/github/accessibility-scanner) against the live pages after each Pages deployment of `main`, and can also be run by hand from the Actions tab. It files an issue per finding (and hands them to Copilot, if enabled), so review any proposed fixes before merging.
+
+- Needs a fine-grained personal access token saved as the repository secret `GH_TOKEN` (the default token won't work).
+- Scans only the published pages listed in the workflow. Add new writings to its `urls` list.
+- `dry_run: true` logs findings without filing issues; remove it to file for real.
+
 ## Open ideas
 
 - Speaking topics and résumé link in Connect
